@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modernisierter Kalender – Screenshots (Neutrales Admidio-Design)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: system-ui, -apple-system, sans-serif; padding-bottom: 60px; }
+        .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2.5rem; overflow: hidden; }
+        .card-header { font-weight: 600; font-size: 1.1rem; }
+        img.preview-img { width: 100%; height: auto; display: block; border-top: 1px solid #dee2e6; }
+        .badge-type { font-size: 0.85rem; margin-right: 5px; }
+        .toc-link { text-decoration: none; font-weight: 500; }
+        .mobile-col { max-width: 480px; margin: 0 auto; }
+        .tab-btn { font-weight: 600; font-size: 0.95rem; }
+        .nav-pills .nav-link.active { background-color: #349aaa; }
+        .nav-pills .nav-link { color: #349aaa; border: 1px solid #349aaa; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Header -->
+        <div class="p-4 bg-white rounded-3 shadow-sm mb-4">
+            <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-calendar-week text-primary fs-2 me-3"></i>
+                <div>
+                    <h1 class="h3 mb-0">Kalender-Modernisierung: Screenshots & Wochentagsformate</h1>
+                    <span class="badge bg-secondary text-uppercase">Admidio Pull Request #2163</span>
+                    <span class="badge bg-success">Branch: feature/events-modernization</span>
+                </div>
+            </div>
+            <p class="text-muted mt-2 mb-3">Vorschau für den Pull Request im offiziellen Admidio-Design (Teal/Türkis), neutralen Vereinsdaten und anonymisierten Orten/Namen. Zeigt alle 3 Wochentags-Formate (Aus, Kurz, Lang) sowie die responsive Darstellung.</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="#weekdays-comparison" class="btn btn-sm btn-primary toc-link"><i class="bi bi-arrow-left-right me-1"></i>1. Wochentags-Vergleich (Fokus Tabelle)</a>
+                <a href="#desktop-full" class="btn btn-sm btn-outline-primary toc-link"><i class="bi bi-display me-1"></i>2. Desktop (Gesamtansicht)</a>
+                <a href="#cards-view" class="btn btn-sm btn-outline-primary toc-link"><i class="bi bi-card-text me-1"></i>3. Kachelansicht (Cards)</a>
+                <a href="#responsive-view" class="btn btn-sm btn-outline-primary toc-link"><i class="bi bi-phone me-1"></i>4. Tablet & Smartphone</a>
+            </div>
+        </div>
+
+        <!-- 5 Appointment types info box -->
+        <div class="alert alert-info d-flex align-items-center mb-4">
+            <i class="bi bi-info-circle-fill fs-3 me-3 flex-shrink-0"></i>
+            <div>
+                <strong>Dargestellte 5 Termintypen in allen Ansichten:</strong>
+                <ol class="mb-0 mt-1 ps-3 row g-1">
+                    <li class="col-md-6"><strong>Einzeltermin mit Von–Bis:</strong> <code>18:45 – 20:45</code> (Vorstandssitzung)</li>
+                    <li class="col-md-6"><strong>Einzeltermin ganztägig:</strong> <code>01.10.2026</code> (Vereinsausflug)</li>
+                    <li class="col-md-6"><strong>Einzeltermin nur Beginn:</strong> <code>19:30</code> (Fortbildung)</li>
+                    <li class="col-md-6"><strong>Mehrtägig ganztägig:</strong> <code>03.10. – 05.10.</code> (Wochenendseminar)</li>
+                    <li class="col-md-12"><strong>Mehrtägig mit Uhrzeiten:</strong> <code>05.10. 10:00 – 06.10. 16:00</code> (Jahresfahrt)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- SECTION 1: Weekdays comparison -->
+        <div class="card mb-4" id="weekdays-comparison">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-arrow-left-right me-2"></i>1. Wochentags-Formate im Vergleich (Fokus auf Datums-Spalte & Ausrichtung)</span>
+                <span class="badge bg-info text-dark">Preference: events_weekday_format</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">In den Einstellungen (<em>Einstellungen → Termine</em>) kann das Format für Wochentage konfiguriert werden. Dank fester Mindestbreiten und rechtsbündiger Ausrichtung der Wochentage starten die Ziffern des Datums in allen Varianten exakt linksbündig untereinander:</p>
+
+                <!-- Sub-tabs for quick switching -->
+                <ul class="nav nav-pills mb-3 gap-2" id="weekdayTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active tab-btn" id="short-tab" data-bs-toggle="pill" data-bs-target="#tab-short" type="button" role="tab">
+                            <i class="bi bi-check2-circle me-1"></i>Kurze Wochentage (short) – Standard
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link tab-btn" id="none-tab" data-bs-toggle="pill" data-bs-target="#tab-none" type="button" role="tab">
+                            <i class="bi bi-slash-circle me-1"></i>Keine Wochentage (none)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link tab-btn" id="long-tab" data-bs-toggle="pill" data-bs-target="#tab-long" type="button" role="tab">
+                            <i class="bi bi-fonts me-1"></i>Lange Wochentage (long)
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="weekdayTabContent">
+                    <!-- Tab: Short -->
+                    <div class="tab-pane fade show active" id="tab-short" role="tabpanel">
+                        <div class="border rounded-3 p-3 bg-white mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="mb-0 text-primary">Kurze Wochentage: <code>events_weekday_format = 'short'</code></h5>
+                                <a href="events_table_focused_short.png" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+                            </div>
+                            <p class="text-muted small mb-3">Rechtsbündige 2-Buchstaben-Kürzel (z. B. <code>Mi,</code>, <code>Do,</code>, <code>Fr,</code>). Ziffern starten exakt am gleichen horizontalen Pixel.</p>
+                            <a href="events_table_focused_short.png" target="_blank">
+                                <img src="events_table_focused_short.png" class="preview-img rounded" alt="Kurze Wochentage Fokus">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tab: None -->
+                    <div class="tab-pane fade" id="tab-none" role="tabpanel">
+                        <div class="border rounded-3 p-3 bg-white mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="mb-0 text-secondary">Keine Wochentage: <code>events_weekday_format = 'none'</code></h5>
+                                <a href="events_table_focused_none.png" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+                            </div>
+                            <p class="text-muted small mb-3">Reines Datum ohne Wochentag (z. B. <code>30.09.2026 18:45 - 20:45</code>). Ziffern schließen direkt und bündig an das Kalendersymbol an.</p>
+                            <a href="events_table_focused_none.png" target="_blank">
+                                <img src="events_table_focused_none.png" class="preview-img rounded" alt="Keine Wochentage Fokus">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Long -->
+                    <div class="tab-pane fade" id="tab-long" role="tabpanel">
+                        <div class="border rounded-3 p-3 bg-white mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="mb-0 text-success">Lange Wochentage: <code>events_weekday_format = 'long'</code></h5>
+                                <a href="events_table_focused_long.png" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+                            </div>
+                            <p class="text-muted small mb-3">Vollständig ausgeschriebene Wochentage (z. B. <code>Mittwoch,</code>, <code>Donnerstag,</code>). Durch <code>min-width: 6.2em; text-align: right;</code> sind auch hier alle Ziffern exakt linksbündig.</p>
+                            <a href="events_table_focused_long.png" target="_blank">
+                                <img src="events_table_focused_long.png" class="preview-img rounded" alt="Lange Wochentage Fokus">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Desktop Full (1440x900) -->
+        <div class="card mb-4" id="desktop-full">
+            <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #349aaa;">
+                <span><i class="bi bi-window me-2"></i>2. Desktop – Gesamtansichten (1440×900)</span>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                                <strong>Standard: Kurze Wochentage (short)</strong>
+                                <a href="events_desktop_table_short.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+                            </div>
+                            <a href="events_desktop_table_short.png" target="_blank">
+                                <img src="events_desktop_table_short.png" class="preview-img" alt="Desktop Gesamt Short">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm mb-0">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                                <strong>Keine Wochentage (none)</strong>
+                                <a href="events_desktop_table_none.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+                            </div>
+                            <a href="events_desktop_table_none.png" target="_blank">
+                                <img src="events_desktop_table_none.png" class="preview-img" alt="Desktop Gesamt None">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm mb-0">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                                <strong>Lange Wochentage (long)</strong>
+                                <a href="events_desktop_table_long.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+                            </div>
+                            <a href="events_desktop_table_long.png" target="_blank">
+                                <img src="events_desktop_table_long.png" class="preview-img" alt="Desktop Gesamt Long">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Cards View -->
+        <div class="card mb-4" id="cards-view">
+            <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #2c7a87;">
+                <span><i class="bi bi-card-text me-2"></i>3. Kachelansicht (view=detail) mit Wochentagen</span>
+                <a href="events_cards_short.png" target="_blank" class="btn btn-sm btn-light"><i class="bi bi-box-arrow-up-right me-1"></i>Vollbild</a>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm mb-0">
+                            <div class="card-header bg-light py-2 d-flex justify-content-between align-items-center">
+                                <small class="fw-bold">Keine Wochentage (none)</small>
+                                <a href="events_cards_none.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right"></i></a>
+                            </div>
+                            <a href="events_cards_none.png" target="_blank">
+                                <img src="events_cards_none.png" class="preview-img" alt="Cards None">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm mb-0">
+                            <div class="card-header bg-light py-2 d-flex justify-content-between align-items-center">
+                                <small class="fw-bold text-primary">Kurze Wochentage (short)</small>
+                                <a href="events_cards_short.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right"></i></a>
+                            </div>
+                            <a href="events_cards_short.png" target="_blank">
+                                <img src="events_cards_short.png" class="preview-img" alt="Cards Short">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm mb-0">
+                            <div class="card-header bg-light py-2 d-flex justify-content-between align-items-center">
+                                <small class="fw-bold text-success">Lange Wochentage (long)</small>
+                                <a href="events_cards_long.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right"></i></a>
+                            </div>
+                            <a href="events_cards_long.png" target="_blank">
+                                <img src="events_cards_long.png" class="preview-img" alt="Cards Long">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: Responsive -->
+        <div class="card mb-4" id="responsive-view">
+            <div class="card-header text-white" style="background-color: #215e68;">
+                <i class="bi bi-phone me-2"></i>4. Responsive Darstellung (Tablet 768px & Smartphone 390px)
+            </div>
+            <div class="card-body bg-light">
+                <div class="row g-4 justify-content-center">
+                    <!-- Tablet -->
+                    <div class="col-lg-6">
+                        <div class="card shadow-sm h-100 mb-0">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
+                                <small class="fw-bold"><i class="bi bi-tablet me-1"></i>Tablet (768×1024) – Zeitraum unter dem Titel</small>
+                                <a href="events_tablet_table_short.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right"></i></a>
+                            </div>
+                            <a href="events_tablet_table_short.png" target="_blank">
+                                <img src="events_tablet_table_short.png" class="preview-img" alt="Tablet">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Mobile -->
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="card shadow-sm h-100 mb-0">
+                                    <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
+                                        <small class="fw-bold"><i class="bi bi-phone me-1"></i>Smartphone</small>
+                                        <a href="events_mobile_table_short.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right"></i></a>
+                                    </div>
+                                    <a href="events_mobile_table_short.png" target="_blank">
+                                        <img src="events_mobile_table_short.png" class="preview-img" alt="Mobile">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card shadow-sm h-100 mb-0">
+                                    <div class="card-header bg-white d-flex justify-content-between align-items-center py-2">
+                                        <small class="fw-bold"><i class="bi bi-chevron-down me-1"></i>Aufgeklappt</small>
+                                        <a href="events_mobile_table_expanded.png" target="_blank" class="btn btn-xs btn-outline-secondary py-0"><i class="bi bi-box-arrow-up-right"></i></a>
+                                    </div>
+                                    <a href="events_mobile_table_expanded.png" target="_blank">
+                                        <img src="events_mobile_table_expanded.png" class="preview-img" alt="Mobile Aufgeklappt">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
